@@ -27,14 +27,21 @@ e.preventDefault(e);
 if (e.target.nodeName !== "IMG" ){
     return;
 }
-const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`);
+const instance = basicLightbox.create(`<img src="${e.target.dataset.source}">`,
+{
+  onShow: (instance) => {gallery.addEventListener('keydown', escButtonHandler);
+},
+onClose: (instance) => {gallery.removeEventListener('keydown', escButtonHandler);
+},
+}
+)
 instance.show();
 
-gallery.addEventListener("keydown", (e) => {
+ function escButtonHandler (e) {
     if(e.code==="Escape"){
         instance.close();
     }
-  });
+  };
 };
 
 
